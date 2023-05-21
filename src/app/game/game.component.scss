@@ -1,0 +1,31 @@
+$canvasSize: 400px;
+$gridSizePixels: 20px;
+
+.game-container {
+  width: $canvasSize;
+  height: $canvasSize;
+  background-color: #f2f2f2;
+  position: relative;
+  margin: 0 auto;
+
+  .snake-segment {
+    width: $gridSizePixels;
+    height: $gridSizePixels;
+    background-color: #ffcc99;
+    border-radius: 50%;
+    position: absolute;
+  }
+
+  .food {
+    width: $gridSizePixels;
+    height: $gridSizePixels;
+    background-color: #a6d854;
+    border-radius: 50%;
+    position: absolute;
+  }
+}
+
+.score {
+  margin-top: 20px;
+  font-size: 20px;
+}
