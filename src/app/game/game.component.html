@@ -1,6 +1,5 @@
 <div class="game-container">
-    <div class="snake-segment" *ngFor="let segment of snake"></div>
-    <div class="food" [style.left.px]="food.x * gridSizePixels" [style.top.px]="food.y * gridSizePixels"></div>
-  </div>
-  <div class="score">Score: {{ score }}</div>
-  
+  <div class="snake-segment" *ngFor="let segment of snake"></div>
+  <div class="food" [style.left.px]="food.x * gridSizePixels" [style.top.px]="food.y * gridSizePixels"></div>
+</div>
+<div class="score">Score: {{ score }}</div>

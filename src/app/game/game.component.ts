@@ -6,10 +6,13 @@ enum Direction {
   Left = 'left',
   Right = 'right',
 }
-
 interface Point {
   x: number;
   y: number;
+}
+
+interface SnakePoint extends Point {
+  direction?: Direction;
 }
 
 @Component({
@@ -21,7 +24,7 @@ export class GameComponent implements OnInit {
   gridSize = 20;
   gridSizePixels = 20;
   canvasSize = 400;
-  snake: Point[] = [];
+  snake: SnakePoint[] = [];
   direction!: Direction | string;
   food!: Point;
   interval: any;
@@ -34,13 +37,13 @@ export class GameComponent implements OnInit {
   startGame() {
     this.snake = [
       { x: Math.floor(this.gridSize / 2), y: Math.floor(this.gridSize / 2) },
-      { x: Math.floor(this.gridSize / 2), y: Math.floor(this.gridSize / 2) + 1 },
-      { x: Math.floor(this.gridSize / 2), y: Math.floor(this.gridSize / 2) + 2 }
+      { x: Math.floor(this.gridSize / 2), y: Math.floor(this.gridSize / 2) },
+      { x: Math.floor(this.gridSize / 2), y: Math.floor(this.gridSize / 2) + 1 }
     ];
     this.direction = Direction.Right;
     this.food = this.generateFood();
     this.score = 0;
-  
+
     this.interval = setInterval(() => {
       this.move();
     }, 200);
@@ -77,6 +80,7 @@ export class GameComponent implements OnInit {
       alert('Game Over!');
     }
   }
+
 
   isCollisionWithFood() {
     const head = this.snake[0];
@@ -130,7 +134,7 @@ export class GameComponent implements OnInit {
 
     if (validKeys.includes(key)) {
       event.preventDefault();
-      this.changeDirection(key.substr(5).toLowerCase());
+      this.changeDirection(key.toLowerCase());
     }
   }
 
@@ -142,9 +146,21 @@ export class GameComponent implements OnInit {
       (this.direction === Direction.Left && direction === Direction.Right) ||
       (this.direction === Direction.Right && direction === Direction.Left)
     ) {
-      return;
+      // Add this check to ensure the new direction is not the opposite
+      if (this.direction === newDirection) {
+        return;
+      }
     }
-  
+
     this.direction = direction;
+    this.snake = this.snake.map((segment, index) => {
+      const newSegment = { ...segment, direction: direction };
+      if (index === 0 && this.direction === newDirection) {
+        return newSegment;
+      } else {
+        return newSegment;
+      }
+    });
   }
+
 }
